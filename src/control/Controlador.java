@@ -28,7 +28,7 @@ public class Controlador implements KeyListener {
     }
 
     public void iniciar() {
-        JFrame frame = new JFrame("Movement Challenge (Esquiva al Enemigo)");
+        JFrame frame = new JFrame("juego test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(vista);
         frame.pack();
