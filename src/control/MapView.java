@@ -1,9 +1,9 @@
 package control;
 
+import java.awt.*;
+import javax.swing.*;
 import model.Mapa;
 import model.ObjetoEnMapa;
-import javax.swing.*;
-import java.awt.*;
 
 public class MapView extends JPanel {
     private Mapa mapa; 
@@ -23,7 +23,7 @@ public class MapView extends JPanel {
         int altoMapa = mapa.getAlto();
         int anchoMapa = mapa.getAncho();
         
-        // 1. Dibujar la matriz de fondo
+        // 1. dibujar matriz fondo
         for (int y = 0; y < altoMapa; y++) {
             for (int x = 0; x < anchoMapa; x++) {
                 int px = x * tamañoCelda;
@@ -36,7 +36,7 @@ public class MapView extends JPanel {
             }
         }
         
-        // 2. Dibujar los objetos (caracteres)
+        // 2. dibujar chars
         g.setFont(new Font("Monospaced", Font.BOLD, 24));
         
         for (ObjetoEnMapa obj : mapa.getObjetos()) {
