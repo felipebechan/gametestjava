@@ -1,30 +1,33 @@
 package app;
 
-import model.Mapa;
-import model.ObjetoEnMapa;
+import util.MapLoader;
+import util.MapaData;
 import control.GameController;
 import control.MapView;
 import engine.GameLoop;
 import input.InputHandler;
 import view.GameWindow;
+import java.io.IOException;
 
 public class App {
     public static void main(String[] args) {
-        ObjetoEnMapa jugador = new ObjetoEnMapa(1, 1, '@');
-        ObjetoEnMapa enemigo = new ObjetoEnMapa(8, 8, 'E');
-        ObjetoEnMapa meta    = new ObjetoEnMapa(9, 9, 'G');
+        String ruta = args.length > 0 ? args[0] : "maps/nivel1.map";
 
-        Mapa mapa = new Mapa(10, 10, new ObjetoEnMapa[]{jugador, enemigo, meta});
+        try {
+            MapaData datos = MapLoader.cargar(ruta);
 
-        MapView vista         = new MapView(mapa);
-        GameController controller = new GameController(mapa, jugador, enemigo, meta, vista);
-        InputHandler input    = new InputHandler(controller);
+            MapView vista         = new MapView(datos.mapa);
+            GameController controller = new GameController(datos.mapa, datos.jugador, datos.enemigos, datos.meta, vista);
+            InputHandler input    = new InputHandler(controller);
 
-        vista.addKeyListener(input);
-        vista.setFocusable(true);
+            vista.addKeyListener(input);
+            vista.setFocusable(true);
 
-        new GameWindow(vista);
+            new GameWindow(vista);
+            new GameLoop(controller, 500).iniciar();
 
-        new GameLoop(controller, 500).iniciar();
+        } catch (IOException e) {
+            System.err.println("Error al cargar el mapa: " + e.getMessage());
+        }
     }
 }

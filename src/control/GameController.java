@@ -2,42 +2,45 @@ package control;
 
 import engine.CollisionSystem;
 import engine.EnemyAI;
+import javax.swing.JOptionPane;
 import model.Mapa;
 import model.ObjetoEnMapa;
-import javax.swing.JOptionPane;
+import java.util.List;
 
 public class GameController {
     private final Mapa mapa;
     private final ObjetoEnMapa jugador;
-    private final ObjetoEnMapa enemigo;
+    private final List<ObjetoEnMapa> enemigos;
     private final ObjetoEnMapa meta;
     private final MapView vista;
     private final EnemyAI enemigoAI = new EnemyAI();
     private final CollisionSystem colisiones = new CollisionSystem();
 
-    public GameController(Mapa mapa, ObjetoEnMapa jugador, ObjetoEnMapa enemigo,
+    public GameController(Mapa mapa, ObjetoEnMapa jugador, List<ObjetoEnMapa> enemigos,
                           ObjetoEnMapa meta, MapView vista) {
-        this.mapa    = mapa;
-        this.jugador = jugador;
-        this.enemigo = enemigo;
-        this.meta    = meta;
-        this.vista   = vista;
+        this.mapa     = mapa;
+        this.jugador  = jugador;
+        this.enemigos = enemigos;
+        this.meta     = meta;
+        this.vista    = vista;
     }
 
-    // Llamado por el GameLoop en cada tick
     public void tick() {
-        enemigoAI.mover(enemigo, jugador, mapa);
+        for (ObjetoEnMapa enemigo : enemigos) {
+            enemigoAI.mover(enemigo, jugador, mapa);
+        }
         comprobarCondiciones();
         vista.repaint();
     }
 
-    // Llamado por InputHandler al presionar una tecla
     public void moverJugador(int dx, int dy) {
         int nuevoX = jugador.getX() + dx;
         int nuevoY = jugador.getY() + dy;
 
-        if (nuevoX >= 0 && nuevoX < mapa.getAncho() &&
-            nuevoY >= 0 && nuevoY < mapa.getAlto()) {
+        boolean dentroDelMapa = nuevoX >= 0 && nuevoX < mapa.getAncho()
+                             && nuevoY >= 0 && nuevoY < mapa.getAlto();
+
+        if (dentroDelMapa && !mapa.esSolido(nuevoX, nuevoY)) {
             jugador.mover(dx, dy);
             comprobarCondiciones();
             vista.repaint();
@@ -49,9 +52,11 @@ public class GameController {
             JOptionPane.showMessageDialog(null, "¡VICTORIA!");
             System.exit(0);
         }
-        if (colisiones.hayDerrota(jugador, enemigo)) {
-            JOptionPane.showMessageDialog(null, "¡DERROTA!");
-            System.exit(0);
+        for (ObjetoEnMapa enemigo : enemigos) {
+            if (colisiones.hayDerrota(jugador, enemigo)) {
+                JOptionPane.showMessageDialog(null, "¡DERROTA!");
+                System.exit(0);
+            }
         }
     }
 }

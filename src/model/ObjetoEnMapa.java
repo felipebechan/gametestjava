@@ -1,26 +1,9 @@
 package model;
 
-public class ObjetoEnMapa {
-    private int x;
-    private int y;
-    private char sprite;
+public class ObjetoEnMapa extends Entidad {
 
     public ObjetoEnMapa(int x, int y, char sprite) {
-        this.x = x;
-        this.y = y;
-        this.sprite = sprite;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public char getSprite() {
-        return sprite;
+        super(x, y, sprite);
     }
 
     public void mover(int dx, int dy) {
