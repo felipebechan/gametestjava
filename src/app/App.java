@@ -4,6 +4,7 @@ import model.Mapa;
 import model.ObjetoEnMapa;
 import control.GameController;
 import control.MapView;
+import engine.GameLoop;
 import input.InputHandler;
 import view.GameWindow;
 
@@ -23,5 +24,7 @@ public class App {
         vista.setFocusable(true);
 
         new GameWindow(vista);
+
+        new GameLoop(controller, 500).iniciar();
     }
 }

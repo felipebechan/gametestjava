@@ -17,13 +17,21 @@ public class GameController {
 
     public GameController(Mapa mapa, ObjetoEnMapa jugador, ObjetoEnMapa enemigo,
                           ObjetoEnMapa meta, MapView vista) {
-        this.mapa     = mapa;
-        this.jugador  = jugador;
-        this.enemigo  = enemigo;
-        this.meta     = meta;
-        this.vista    = vista;
+        this.mapa    = mapa;
+        this.jugador = jugador;
+        this.enemigo = enemigo;
+        this.meta    = meta;
+        this.vista   = vista;
     }
 
+    // Llamado por el GameLoop en cada tick
+    public void tick() {
+        enemigoAI.mover(enemigo, jugador, mapa);
+        comprobarCondiciones();
+        vista.repaint();
+    }
+
+    // Llamado por InputHandler al presionar una tecla
     public void moverJugador(int dx, int dy) {
         int nuevoX = jugador.getX() + dx;
         int nuevoY = jugador.getY() + dy;
@@ -31,13 +39,12 @@ public class GameController {
         if (nuevoX >= 0 && nuevoX < mapa.getAncho() &&
             nuevoY >= 0 && nuevoY < mapa.getAlto()) {
             jugador.mover(dx, dy);
-            actualizarJuego();
+            comprobarCondiciones();
+            vista.repaint();
         }
     }
 
-    private void actualizarJuego() {
-        enemigoAI.mover(enemigo, jugador, mapa);
-
+    private void comprobarCondiciones() {
         if (colisiones.hayVictoria(jugador, meta)) {
             JOptionPane.showMessageDialog(null, "¡VICTORIA!");
             System.exit(0);
@@ -46,7 +53,5 @@ public class GameController {
             JOptionPane.showMessageDialog(null, "¡DERROTA!");
             System.exit(0);
         }
-
-        vista.repaint();
     }
 }
