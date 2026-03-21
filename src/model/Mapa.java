@@ -6,13 +6,15 @@ public class Mapa {
     private final Entidad[] entidades;
 
     public Mapa(int alto, int ancho, Entidad[] entidades) {
-        this.alto      = alto;
-        this.ancho     = ancho;
-        this.entidades = entidades;
+        this.alto= alto;
+        this.ancho= ancho;
+        this.entidades= entidades;
     }
 
-    public int getAncho()          { return ancho; }
-    public int getAlto()           { return alto; }
+    public int getAncho(){ return ancho; }
+    public int getAlto(){ return alto; }
+    
+    //.-.-.-.-.-.-.-.-.-.-.-.
     public Entidad[] getEntidades(){ return entidades; }
 
     public boolean esSolido(int x, int y) {

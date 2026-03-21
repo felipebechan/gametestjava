@@ -17,7 +17,7 @@ public class App {
             MapaData datos = MapLoader.cargar(ruta);
 
             MapView vista         = new MapView(datos.mapa);
-            GameController controller = new GameController(datos.mapa, datos.jugador, datos.enemigos, datos.meta, vista);
+            GameController controller = new GameController(datos.mapa, datos.jugador, datos.enemigos, datos.meta, vista, 1, "maps/nivel%d.map");
             InputHandler input    = new InputHandler(controller);
 
             vista.addKeyListener(input);

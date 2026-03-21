@@ -10,10 +10,9 @@ public abstract class Entidad {
         this.y = y;
         this.sprite = sprite;
     }
+    public int getX() {return x; }
+    public int getY() {return y; }
+    public char getSprite(){return sprite; }
 
-    public int getX()       { return x; }
-    public int getY()       { return y; }
-    public char getSprite() { return sprite; }
-
-    public boolean esSolido() { return false; }
+    public boolean esSolido(){return false; }
 }

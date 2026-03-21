@@ -12,7 +12,7 @@ public class ObjetoEnMapa extends Entidad {
     }
 
     public void moverA(int nuevoX, int nuevoY) {
-        this.x = nuevoX;
+        this.x= nuevoX;
         this.y = nuevoY;
     }
 }

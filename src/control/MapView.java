@@ -6,12 +6,17 @@ import model.Entidad;
 import model.Mapa;
 
 public class MapView extends JPanel {
-    private final Mapa mapa;
+    private Mapa mapa;
     private final int tamañoCelda = 30;
 
     public MapView(Mapa mapa) {
         this.mapa = mapa;
         setPreferredSize(new Dimension(mapa.getAncho() * tamañoCelda, mapa.getAlto() * tamañoCelda));
+    }
+
+    public void setMapa(Mapa m) {
+        this.mapa = m;
+        setPreferredSize(new Dimension(m.getAncho() * tamañoCelda, m.getAlto() * tamañoCelda));
     }
 
     @Override
